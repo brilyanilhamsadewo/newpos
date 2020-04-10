@@ -8,7 +8,6 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
     use Notifiable, HasRoles;
 
     /**
@@ -17,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'status',
     ];
 
     /**
@@ -28,4 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
